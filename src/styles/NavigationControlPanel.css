@@ -1,0 +1,44 @@
+/* NavigationControlPanel.css */
+
+.navigation-header {
+    position: fixed; /* Фиксированное позиционирование */
+    top: 0; /* Расположение сверху */
+    left: 0; /* Расположение слева */
+    width: 100%; /* Ширина на всю страницу */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333; /* Цвет фона */
+    color: #fff; /* Цвет текста */
+    padding: 20px 20px; /* Внутренние отступы */
+  }
+  
+  .navigation-header-left,
+  .navigation-header-right {
+    flex: 1;
+    text-align: left; /* Выравнивание содержимого влево */
+  }
+  
+  .navigation-header-center {
+    flex: 2;
+    text-align: center; /* Выравнивание содержимого по центру */
+  }
+  
+  .navigation-header a {
+    color: #fff; /* Цвет ссылок */
+    text-decoration: none; /* Убираем подчеркивание у ссылок */
+    margin: 0 10px; /* Внешние отступы для ссылок */
+  }
+  .navigation-header a.exit-link {
+    background-color: #FF5757; /* Цвет текста */
+    text-decoration: none; /* Убираем подчеркивание у ссылок */
+    margin: 0 10px; /* Внешние отступы */
+    border-radius: 5px; /* Скругление углов */
+    padding: 8px 12px; /* Внутренние отступы */
+  }
+  
+  .navigation-header a.exit-link:hover {
+    background-color: #5A57FF; /* Цвет фона при наведении */
+    color: #fff; /* Цвет текста при наведении */
+  }
+  
