@@ -1,0 +1,13 @@
+.analytics-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .chart-container {
+    margin-bottom: 40px;
+  }
+  .analytics-page {
+    padding-top: 80px; /* Высота хедера + небольшой дополнительный отступ */
+  }
+  
