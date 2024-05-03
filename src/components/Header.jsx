@@ -1,8 +1,6 @@
-// src/components/Header.jsx
-
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../App.css'; // Подключаем стили
+import '../styles/Header.css'; // Подключаем стили
 
 const Header = () => {
     const handleLoginClick = () => {

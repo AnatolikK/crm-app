@@ -1,44 +1,45 @@
 /* NavigationControlPanel.css */
 
 .navigation-header {
-    position: fixed; /* Фиксированное позиционирование */
-    top: 0; /* Расположение сверху */
-    left: 0; /* Расположение слева */
-    width: 100%; /* Ширина на всю страницу */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #333; /* Цвет фона */
-    color: #fff; /* Цвет текста */
-    padding: 20px 20px; /* Внутренние отступы */
-  }
-  
-  .navigation-header-left,
-  .navigation-header-right {
-    flex: 1;
-    text-align: left; /* Выравнивание содержимого влево */
-  }
-  
-  .navigation-header-center {
-    flex: 2;
-    text-align: center; /* Выравнивание содержимого по центру */
-  }
-  
-  .navigation-header a {
-    color: #fff; /* Цвет ссылок */
-    text-decoration: none; /* Убираем подчеркивание у ссылок */
-    margin: 0 10px; /* Внешние отступы для ссылок */
-  }
-  .navigation-header a.exit-link {
-    background-color: #FF5757; /* Цвет текста */
-    text-decoration: none; /* Убираем подчеркивание у ссылок */
-    margin: 0 10px; /* Внешние отступы */
-    border-radius: 5px; /* Скругление углов */
-    padding: 8px 12px; /* Внутренние отступы */
-  }
-  
-  .navigation-header a.exit-link:hover {
-    background-color: #5A57FF; /* Цвет фона при наведении */
-    color: #fff; /* Цвет текста при наведении */
-  }
-  
+  position: relative !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  background-color: #333 !important;
+  color: #fff !important;
+  padding: 20px 0px;
+  margin-bottom: 20px !important;
+}
+
+
+.navigation-header-left,
+.navigation-header-right {
+  flex: 1;
+  text-align: left; /* Выравнивание содержимого влево */
+}
+
+.navigation-header-center {
+  flex: 2;
+  text-align: center; /* Выравнивание содержимого по центру */
+}
+
+.navigation-header a {
+  color: #fff; /* Цвет ссылок */
+  text-decoration: none; /* Убираем подчеркивание у ссылок */
+  margin: 0 10px; /* Внешние отступы для ссылок */
+}
+.navigation-header a.exit-link {
+  background-color: #FF5757; /* Цвет текста */
+  text-decoration: none; /* Убираем подчеркивание у ссылок */
+  margin: 0 10px; /* Внешние отступы */
+  border-radius: 5px; /* Скругление углов */
+  padding: 8px 12px; /* Внутренние отступы */
+}
+
+.navigation-header a.exit-link:hover {
+  background-color: #5A57FF; /* Цвет фона при наведении */
+  color: #fff; /* Цвет текста при наведении */
+}

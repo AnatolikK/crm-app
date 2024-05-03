@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
-import NavigationControlPanel from '../components/NavigationControlPanel'; // Импортируем компонент навигационной панели
-import clients from '../components/ClientDashboard/clientsData'; // Импортируем массив клиентов
+import NavigationControlPanel from '../components/NavigationControlPanel';
+import clients from '../components/ClientDashboard/clientsData';
 import ClientDetails from '../components/ClientDashboard/ClientDetails';
-import '../styles/ClientListPage.css'; // Импортируем файл стилей для страницы списка клиентов
+import '../styles/ClientListPage.css';
 
 const ClientList = () => {
   const [selectedClient, setSelectedClient] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const handleClientClick = (client) => {
     setSelectedClient(client);
+  };
+
+  const handleCloseClientDetails = () => {
+    setSelectedClient(null);
   };
 
   const renderClientRow = (client) => (
@@ -19,28 +24,38 @@ const ClientList = () => {
     </tr>
   );
 
+  // Фильтрация клиентов по поисковому запросу
+  const filteredClients = clients.filter((client) =>
+    client.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    client.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    client.phone.includes(searchTerm)
+  );
+
   return (
     <div>
-      {/* Включаем навигационную панель */}
       <NavigationControlPanel />
-      <h2>Список клиентов</h2>
-      <input type="text" placeholder="Поиск..." />
-      <table>
-        <thead>
-          <tr>
-            <th>Имя</th>
-            <th>Почта</th>
-            <th>Телефон</th>
-          </tr>
-        </thead>
-        <tbody>
-          {clients.map(renderClientRow)}
-        </tbody>
-      </table>
-      {selectedClient && <ClientDetails client={selectedClient} />}
-      {/* Кнопка "Подробнее" */}
-      <button className="detail-button" onClick={() => console.log("Подробнее")}>Подробнее</button>
-      {/* Pagination component here */}
+      <div className="client-list-container">
+        <h2>Список клиентов</h2>
+        <input 
+          type="text" 
+          placeholder="Поиск..." 
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <table className="client-table">
+          <thead>
+            <tr>
+              <th>Имя</th>
+              <th>Почта</th>
+              <th>Телефон</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredClients.map(renderClientRow)}
+          </tbody>
+        </table>
+        {selectedClient && <ClientDetails client={selectedClient} onClose={handleCloseClientDetails} />}
+      </div>
     </div>
   );
 };

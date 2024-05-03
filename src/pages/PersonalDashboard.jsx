@@ -3,6 +3,7 @@ import NavigationControlPanel from '../components/NavigationControlPanel';
 import EditProfileForm from '../components/PersonalDashboardComponent/EditProfileForm';
 import MessageSender from '../components/PersonalDashboardComponent/MessageSender';
 import Chart from '../components/PersonalDashboardComponent/Chart'; // Импорт компонента с графиком
+import '../styles/PersonalDashboard.css'; // Импорт файла стилей для страницы персонального кабинета
 
 const PersonalDashboard = () => {
   const initialUserData = JSON.parse(localStorage.getItem('userData')) || {

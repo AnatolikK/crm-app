@@ -1,7 +1,6 @@
 #root {
   max-width: 100%;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
@@ -41,97 +40,6 @@
   color: #888;
 }
 
-/*HEADER-------------------------------------------------------------------------------------------*/
-
-.header {
-  background-color: #333;
-  color: #fff;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  height: 60px;
-}
-
-.logo {
-  height: 3em;
-  padding: 0.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.nav {
-  flex-grow: 1;
-  text-align: center;
-}
-
-.nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.nav ul li {
-  display: inline;
-  margin-left: 20px;
-}
-
-.nav ul li a {
-  color: #fff;
-  text-decoration: none;
-}
-
-.nav ul li a:hover {
-  text-decoration: underline;
-}
-
-.login-button {
-  background-color: transparent;
-  border: 1px solid #fff;
-  color: #fff;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.login-button:hover {
-  background-color: #fff;
-  color: #333;
-}
-
-.login-container {
-  margin-right: 100px; /* Отступ справа для контейнера кнопки "Войти" */
-}
-
-/* Стили для формы входа */
 .login-page {
   max-width: 400px;
   margin: 0 auto;
@@ -172,7 +80,6 @@
   background-color: #0056b3;
 }
 
-/* Стили для формы регистрации */
 .register-page {
   max-width: 400px;
   margin: 0 auto;
@@ -212,72 +119,3 @@
 .register-button:hover {
   background-color: #218838;
 }
-/* reset.css */
-
-/* Обнуление стандартных значений */
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-}
-
-/* HTML5 display-role reset для устройств */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-  display: block;
-}
-
-/* Обнуление шрифтов */
-body {
-  line-height: 1;
-}
-
-/* Список ссылок ведет себя так, как ожидается */
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* Удаляем стандартный список */
-ol, ul {
-  list-style: none;
-}
-
-/* Элементы внутри svg всегда во всю высоту */
-svg {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-/* Избавляемся от горизонтальной прокрутки на узких экранах */
-html, body {
-  overflow-x: hidden;
-}
-
-/* Корректировка для рядов, таблиц и флексбоксов */
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-
-
-
-
-
-
