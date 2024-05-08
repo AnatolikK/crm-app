@@ -8,7 +8,9 @@ import RegisterPage from './pages/RegisterPage';
 import PersonalDashboard from './pages/PersonalDashboard';
 import AnalyticsPage from './pages/AnalyticsPage';
 import ClientsPage from './pages/ClientListPage'; // Подставьте ваш компонент страницы с клиентами
+import ProductsPage from './pages/ProductsPage'; // Подставьте ваш компонент страницы с товарами
 import clients from './components/ClientDashboard/clientsData'; // Импортируем массив клиентов
+import OrdersPage from './pages/OrdersPage';
 
 const App = () => {
   return (
@@ -24,6 +26,9 @@ const App = () => {
         <Route path="/analytics" element={<AnalyticsPage />} />
         {/* Передайте массив clients в компонент ClientsPage */}
         <Route path="/clients" element={<ClientsPage clients={clients} />} />
+        {/* Добавляем маршрут для страницы с товарами */}
+        <Route path="/products" element={<ProductsPage />} />
+        <Route path="/orders" element={<OrdersPage/>}/>
       </Routes>
     </Router>
   );
