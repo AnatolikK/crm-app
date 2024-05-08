@@ -1,3 +1,5 @@
+// AnalyticsPage.js
+
 import React from 'react';
 import NavigationControlPanel from '../components/NavigationControlPanel'; // Импортируем шапку навигации
 import RevenueChart from '../components/Analitics/RevenueChart';

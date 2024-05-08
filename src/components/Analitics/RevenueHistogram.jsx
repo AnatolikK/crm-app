@@ -13,7 +13,7 @@ const data = [
 
 const RevenueHistogram = () => {
   return (
-    <ResponsiveContainer width="100%" height={300}>
+    <ResponsiveContainer width={800} height={300}>
       <BarChart data={data}>
         <XAxis dataKey="name" />
         <YAxis />
