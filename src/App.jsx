@@ -1,3 +1,5 @@
+// App.jsx
+
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
@@ -11,6 +13,8 @@ import ClientsPage from './pages/ClientListPage'; // Подставьте ваш
 import ProductsPage from './pages/ProductsPage'; // Подставьте ваш компонент страницы с товарами
 import clients from './components/ClientDashboard/clientsData'; // Импортируем массив клиентов
 import OrdersPage from './pages/OrdersPage';
+import ConstructorPage from './pages/ConstructorPage';
+import TemplateEditorPage from './pages/TemplateEditorPage'; // Импортируем страницу редактирования шаблона
 
 const App = () => {
   return (
@@ -29,6 +33,8 @@ const App = () => {
         {/* Добавляем маршрут для страницы с товарами */}
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/orders" element={<OrdersPage/>}/>
+        <Route path="/constructor" element={<ConstructorPage/>}/>
+        <Route path="/editor/:templateId" element={<TemplateEditorPage />} /> {/* Новый маршрут для TemplateEditorPage */}
       </Routes>
     </Router>
   );

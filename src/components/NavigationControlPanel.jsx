@@ -17,7 +17,7 @@ const NavigationControlPanel = () => {
         <Link to="/" className="exit-link">Выход</Link>
       </div>
       <div className="navigation-header-center">
-        <Link to="/dashboard" onClick={() => handleLinkClick('Dashboard')} className={currentPage === 'Dashboard' ? 'active' : ''}>Конструктор</Link>
+        <Link to="/constructor" onClick={() => handleLinkClick('Dashboard')} className={currentPage === 'Dashboard' ? 'active' : ''}>Конструктор</Link>
         <Link to="/orders" onClick={() => handleLinkClick('Orders')} className={currentPage === 'Orders' ? 'active' : ''}>Заказы</Link>
         <Link to="/products" onClick={() => handleLinkClick('Products')} className={currentPage === 'Products' ? 'active' : ''}>Товары</Link>
         <Link to="/analytics" onClick={() => handleLinkClick('Analytics')} className={currentPage === 'Analytics' ? 'active' : ''}>Аналитика</Link>
