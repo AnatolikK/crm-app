@@ -1,4 +1,3 @@
-// ProductPage.js
 import React, { useState } from 'react';
 import NavigationControlPanel from '../components/NavigationControlPanel';
 import productsData from '../components/Product/productsData'; 
@@ -14,12 +13,8 @@ const loadProductsFromLocalStorage = () => {
 const ProductPage = () => {
   const [selectedProduct, setSelectedProduct] = useState(null); 
   const [showAddForm, setShowAddForm] = useState(false); 
-  const [products, setProducts] = useState(loadProductsFromLocalStorage); // Используем функцию для загрузки из localStorage
-
-  // Функция для сохранения массива товаров в localStorage
-  const saveProductsToLocalStorage = (updatedProducts) => {
-    localStorage.setItem('products', JSON.stringify(updatedProducts));
-  };
+  const [products, setProducts] = useState(loadProductsFromLocalStorage); 
+  const [searchTerm, setSearchTerm] = useState('');
 
   const handleProductClick = (product) => {
     setSelectedProduct(product);
@@ -38,10 +33,17 @@ const ProductPage = () => {
   };
 
   const handleAddProduct = (newProduct) => {
+    // Добавляем знак рубля к цене товара
+    newProduct.price = `${newProduct.price} ₽`;
+  
+    // Добавляем новый товар к списку
     const updatedProducts = [...products, newProduct];
     setProducts(updatedProducts);
-    saveProductsToLocalStorage(updatedProducts); // Сохраняем обновленный массив в localStorage
+  
+    // Сохраняем обновленный список товаров в localStorage
+    saveProductsToLocalStorage(updatedProducts);
   };
+  
 
   const renderProductRow = (product) => (
     <tr key={product.id} onClick={() => handleProductClick(product)}>
@@ -51,11 +53,26 @@ const ProductPage = () => {
     </tr>
   );
 
+  const saveProductsToLocalStorage = (updatedProducts) => {
+    localStorage.setItem('products', JSON.stringify(updatedProducts));
+  };
+
+  const filteredProducts = products.filter(product =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    product.category.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div>
       <NavigationControlPanel />
       <div className="product-list-container">
         <h2>Список товаров</h2>
+        <input 
+          type="text" 
+          placeholder="Поиск..." 
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
         <button onClick={handleShowAddForm}>Добавить товар</button>
         <table className="product-table">
           <thead>
@@ -66,7 +83,7 @@ const ProductPage = () => {
             </tr>
           </thead>
           <tbody>
-            {products.map(renderProductRow)}
+            {filteredProducts.map(renderProductRow)}
           </tbody>
         </table>
         {selectedProduct && <ProductDetails product={selectedProduct} onClose={handleCloseProductDetails} />}

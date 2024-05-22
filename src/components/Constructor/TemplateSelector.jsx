@@ -1,29 +1,10 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
-const TemplateSelector = () => {
-  const navigate = useNavigate();
-
-  const handleTemplateSelect = (templateId) => {
-    // Перенаправляем пользователя на страницу редактора выбранного шаблона
-    navigate(`/editor/${templateId}`);
-  };
-
+const TemplateSelector = ({ onSelectTemplate }) => {
   return (
     <div>
-      <h2>Выберите шаблон страницы:</h2>
-      <ul>
-        <li>
-          <button onClick={() => handleTemplateSelect('nailmasters')}>
-            Мастер по ногтям
-          </button>
-        </li>
-        <li>
-          <button onClick={() => handleTemplateSelect('florist')}>
-            Флорист
-          </button>
-        </li>
-      </ul>
+      <button onClick={() => onSelectTemplate('template1')}>Template 1</button>
+      <button onClick={() => onSelectTemplate('template2')}>Template 2</button>
     </div>
   );
 };
