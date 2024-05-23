@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-// import '../styles/ConstructorPage.css'; // Подключаем файл стилей для страницы конструктора
+import { Link } from 'react-router-dom';
 
 const ConstructorPage = () => {
-  const location = useLocation();
   const [aliases, setAliases] = useState([]);
-  const [newAlias, setNewAlias] = useState(''); // Состояние для хранения имени нового сайта
+  const [newAlias, setNewAlias] = useState('');
   const [error, setError] = useState('');
 
   // Функция для выполнения GET запроса к API для получения списка созданных сайтов у пользователя
@@ -40,14 +38,14 @@ const ConstructorPage = () => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
-        body: JSON.stringify({ alias: newAlias }) // Используем введенное имя нового сайта
+        body: JSON.stringify({ alias: newAlias })
       });
 
       const data = await response.json();
 
       if (response.ok && data.status === 'OK') {
-        setNewAlias(''); // Сбрасываем поле ввода
-        fetchAliases(); // Обновляем список сайтов после успешного создания нового сайта
+        setNewAlias('');
+        fetchAliases();
       } else {
         setError(data.error || 'Неизвестная ошибка');
       }
@@ -58,7 +56,7 @@ const ConstructorPage = () => {
   };
 
   useEffect(() => {
-    fetchAliases(); // Получаем список созданных сайтов при загрузке страницы
+    fetchAliases();
   }, []);
 
   return (
@@ -70,7 +68,9 @@ const ConstructorPage = () => {
             <h3>Список созданных сайтов:</h3>
             <ul>
               {aliases.map((alias, index) => (
-                <li key={index}>{alias}</li>
+                <li key={index}>
+                  <Link to={`/${alias}/editor`}>{alias}</Link>
+                </li>
               ))}
             </ul>
           </div>
@@ -86,7 +86,7 @@ const ConstructorPage = () => {
         <button onClick={createWebsite}>Создать новый сайт</button>
         {error && <div className="error-message">{error}</div>}
       </div>
-      <Link to={`/${localStorage.getItem('login')}/main`} className="back-link">Назад</Link>
+      <Link to="/profile" className="back-link">Назад</Link>
     </div>
   );
 };
