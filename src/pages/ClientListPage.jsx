@@ -54,7 +54,14 @@ const ClientList = () => {
             {filteredClients.map(renderClientRow)}
           </tbody>
         </table>
-        {selectedClient && <ClientDetails client={selectedClient} onClose={handleCloseClientDetails} />}
+        {selectedClient && (
+          <div className="modal-wrapper" onClick={handleCloseClientDetails}>
+            <div className="modal" onClick={(e) => e.stopPropagation()}>
+              <span className="close" onClick={handleCloseClientDetails}>&times;</span>
+              <ClientDetails client={selectedClient} />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
