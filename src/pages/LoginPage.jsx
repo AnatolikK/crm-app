@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
+import '../styles/LoginPage.css'; // Подключаем файл со стилями
 
 const LoginPage = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -37,27 +38,36 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="login-page">
-      <h2>Вход</h2>
-      <div className="login-form">
-        <input
-          type="text"
-          placeholder="Логин"
-          className="login-input"
-          value={login}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Пароль"
-          className="login-input"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button onClick={handleLogin} className="login-button">Войти</button>
-        {error && <div className="error-message">{error}</div>}
+    <div className="login-container">
+      <div className="login-content">
+        <div className="login-form">
+          <div className="auth-options">
+            <a href="#" className="auth-link active">Вход</a>
+            <a href="/register" className="auth-link">Регистрация</a>
+          </div>
+          <button className="vk-button">Продолжить с Vk</button>
+          <p className="separator">Или</p>
+          <input
+            type="text"
+            placeholder="Логин"
+            className="login-input"
+            value={login}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Пароль"
+            className="login-input"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button onClick={handleLogin} className="login-form-button">Войти</button>
+          {error && <div className="error-message">{error}</div>}
+        </div>
+        <div className="image-container">
+          <img src="/public/Баннер.png" alt="Login" className="side-image" />
+        </div>
       </div>
-      <Link to="/register" className="register-link">Регистрация</Link>
     </div>
   );
 };

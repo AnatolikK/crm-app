@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import '../styles/RegisterPage.css'; // Подключаем файл со стилями
 
 const RegisterPage = () => {
   const [registered, setRegistered] = useState(false);
@@ -36,25 +37,35 @@ const RegisterPage = () => {
   }
 
   return (
-    <div className="register-page">
-      <h2>Регистрация</h2>
-      <div className="register-form">
-        <input
-          type="text"
-          placeholder="Логин"
-          className="register-input"
-          value={login}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Пароль"
-          className="register-input"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button onClick={handleRegister} className="register-button">Зарегистрироваться</button>
-        {error && <div className="error-message">{error}</div>}
+    <div className="register-container">
+      <div className="register-content">
+        <div className="register-form">
+          <div className="auth-options">
+            <a href="/login" className="auth-link">Вход</a>
+            <a href="#" className="auth-link active">Регистрация</a>
+          </div>
+          <button className="vk-button">Продолжить с Vk</button>
+          <p className="separator">Или</p>
+          <input
+            type="text"
+            placeholder="Логин"
+            className="register-input"
+            value={login}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Пароль"
+            className="register-input"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button onClick={handleRegister} className="register-button">Войти</button>
+          {error && <div className="error-message">{error}</div>}
+        </div>
+        <div className="image-container">
+          <img src="/public/Баннер.png" alt="Registration" className="side-image" />
+        </div>
       </div>
     </div>
   );
