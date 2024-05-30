@@ -1,27 +1,30 @@
 import React from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import '../styles/Charts.css';
 
 const Chart = () => {
   const data = [
-    { name: 'Янв', доход: 40000 },
-    { name: 'Фев', доход: 35000 },
-    { name: 'Мар', доход: 20000 },
-    { name: 'Апр', доход: 27800 },
-    { name: 'Май', доход: 18900 },
-    { name: 'Июн', доход: 23900 },
-    { name: 'Июл', доход: 34900 },
+    { name: 'Ноябрь', доход: 45 },
+    { name: 'Декабрь', доход: 30 },
+    { name: 'Январь', доход: 60 },
+    { name: 'Февраль', доход: 50 },
+    { name: 'Март', доход: 40 },
+    { name: 'Апрель', доход: 70 },
   ];
 
   return (
-    <div style={{ width: '100%', height: '400px', marginTop: '20px' }}>
-      <LineChart width={800} height={300} data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="доход" stroke="#8884d8" />
-      </LineChart>
+    <div className="chart-container">
+      <h3>Динамика роста заказов</h3>
+      <ResponsiveContainer width="100%" height={400}>
+        <LineChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Line type="monotone" dataKey="доход" stroke="#8884d8" />
+        </LineChart>
+      </ResponsiveContainer>
     </div>
   );
 };

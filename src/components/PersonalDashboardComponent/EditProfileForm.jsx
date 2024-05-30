@@ -38,7 +38,6 @@ const EditProfileForm = ({ userData, onSaveChanges }) => {
         Изображение:
         <input type="file" accept="image/*" onChange={handleImageChange} />
       </label>
-      {/* Здесь можно добавить другие поля для редактирования */}
       <button onClick={handleSave}>Сохранить</button>
     </div>
   );

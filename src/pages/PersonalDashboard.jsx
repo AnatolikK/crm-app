@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import NavigationControlPanel from '../components/NavigationControlPanel';
 import EditProfileForm from '../components/PersonalDashboardComponent/EditProfileForm';
 import MessageSender from '../components/PersonalDashboardComponent/MessageSender';
-import Chart from '../components/PersonalDashboardComponent/Chart'; // Импорт компонента с графиком
-import '../styles/PersonalDashboard.css'; // Импорт файла стилей для страницы персонального кабинета
+import Chart from '../components/PersonalDashboardComponent/Chart';
+import '../styles/PersonalDashboard.css';
 
 const PersonalDashboard = () => {
   const initialUserData = JSON.parse(localStorage.getItem('userData')) || {
@@ -33,22 +33,39 @@ const PersonalDashboard = () => {
     <div>
       <NavigationControlPanel />
       <div className="personal-dashboard">
-        <div className="user-info">
-          {editMode ? (
-            <EditProfileForm userData={userData} onSaveChanges={handleSaveChanges} />
-          ) : (
-            <>
-              <h3>Персональные данные</h3>
-              <p>Логин: {userData.username}</p>
-              <p>Email: {userData.email}</p>
-              <p>Телефон: {userData.phone}</p>
-              <img src={selectedImage || userData.photo} alt="User" />
-              <button onClick={() => setEditMode(true)}>Редактировать</button>
-            </>
-          )}
+        <div className="top-section">
+          <div className="dashboard-section personal-info">
+            {editMode ? (
+              <EditProfileForm userData={userData} onSaveChanges={handleSaveChanges} />
+            ) : (
+              <div className="user-info">
+                <div>
+                  <img src={selectedImage || userData.photo} alt="User" className="profile-photo" />
+                </div>
+                <div className="info-section">
+                  <div className="profile-header">
+                    <h3>Персональная информация</h3>
+                    <button onClick={() => setEditMode(true)}>Редактировать</button>
+                  </div>
+                  <p>Логин: {userData.username}</p>
+                  <p>Почта: {userData.email}</p>
+                  <p>Телефон: {userData.phone}</p>
+                  <div className="messengers">
+                    <span>Мессенджеры</span>
+                    <img src="/public/vk_icon.png" alt="VK" />
+                    <img src="/public/telegram_icon.png" alt="Telegram" />
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="dashboard-section message-sender">
+            <MessageSender />
+          </div>
         </div>
-        <MessageSender />
-        <Chart /> {/* Добавление компонента с графиком */}
+        <div className="dashboard-section chart-section">
+          <Chart />
+        </div>
       </div>
     </div>
   );

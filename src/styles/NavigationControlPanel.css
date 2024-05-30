@@ -1,45 +1,52 @@
-/* NavigationControlPanel.css */
-
 .navigation-header {
-  position: relative !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100% !important;
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-  background-color: #333 !important;
-  color: #fff !important;
-  padding: 20px 0px;
-  margin-bottom: 20px !important;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  color: #333;
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box; /* Добавлено для учета padding в ширине */
 }
-
 
 .navigation-header-left,
 .navigation-header-right {
   flex: 1;
-  text-align: left; /* Выравнивание содержимого влево */
+  display: flex; /* Добавлено для правильного размещения содержимого */
+  justify-content: flex-start;
+}
+
+.navigation-header-right {
+  justify-content: flex-end; /* Добавлено для выравнивания элементов справа */
 }
 
 .navigation-header-center {
   flex: 2;
-  text-align: center; /* Выравнивание содержимого по центру */
+  display: flex; /* Добавлено для правильного размещения содержимого */
+  justify-content: center;
 }
 
 .navigation-header a {
-  color: #fff; /* Цвет ссылок */
-  text-decoration: none; /* Убираем подчеркивание у ссылок */
-  margin: 0 10px; /* Внешние отступы для ссылок */
+  color: #333;
+  text-decoration: none;
+  margin: 0 10px;
+  padding: 8px 12px;
+  white-space: nowrap; /* Добавлено для предотвращения переноса текста */
 }
+
+.navigation-header a.active {
+  color: #5A57FF;
+  border-bottom: 2px solid #5A57FF;
+}
+
 .navigation-header a.exit-link {
-  background-color: #FF5757; /* Цвет текста */
-  text-decoration: none; /* Убираем подчеркивание у ссылок */
-  margin: 0 10px; /* Внешние отступы */
-  border-radius: 5px; /* Скругление углов */
-  padding: 8px 12px; /* Внутренние отступы */
+  background-color: #FF5757;
+  color: #fff;
+  border-radius: 5px;
+  padding: 8px 12px;
 }
 
 .navigation-header a.exit-link:hover {
-  background-color: #5A57FF; /* Цвет фона при наведении */
-  color: #fff; /* Цвет текста при наведении */
+  background-color: #d44646; /* Улучшено для лучшего эффекта наведения */
 }

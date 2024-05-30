@@ -1,20 +1,18 @@
-/* AnalyticsPage.css */
-
 .analytics-page {
-  padding-top: 80px; /* Высота хедера + небольшой дополнительный отступ */
+  color: #1a1a1a;
 }
 
 .charts-container {
   display: flex;
-  justify-content: center; /* Выравниваем графики по центру горизонтально */
-  align-items: center; /* Выравниваем графики по центру вертикально */
+  justify-content: center; 
+  align-items: center; 
   flex-direction: column;
 }
 
 .chart {
-  margin-right: 20px; /* Добавляем небольшой отступ между графиками */
+  margin-right: 20px; 
 }
 
 .chart:last-child {
-  margin-right: 0; /* Убираем отступ справа у последнего графика */
+  margin-right: 0; /
 }

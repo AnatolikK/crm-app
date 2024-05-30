@@ -1,90 +1,28 @@
 .client-list-container {
   width: 100%;
-  margin-top: 80px;
-  font-size: 20px;
+  font-size: 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: #1a1a1a;
 }
 
-.list-title {
-  margin-top: 20px;
-}
-
-.search-container {
-  margin-top: 20px;
+h2 {
+  margin-bottom: 20px;
 }
 
 .search-input {
-  width: 200px;
+  width: 300px;
   padding: 10px;
-}
-
-.client-table {
-  width: 80%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-.client-table th,
-.client-table td {
-  border: 1px solid #ddd;
-  padding: 12px;
-}
-
-.client-table th {
-  background-color: #f2f2f2;
-  font-weight: bold;
-  text-align: left;
-}
-
-.client-table tr th{
-  background-color: #1a1a1a;
-}
-
-.client-table tr:hover td {
-  background-color: #d9b3ff;
-}
-
-.client-details-button {
-  background-color: #4b0082;
-  color: #fff;
-  border: none;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
   border-radius: 4px;
-  padding: 12px 24px;
-  cursor: pointer;
-}
-
-.client-details-button:hover {
-  background-color: #800080;
-}
-
-.client-list-container {
-  width: 100%;
-  margin-top: 80px;
-  font-size: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.list-title {
-  margin-top: 20px;
-}
-
-.search-container {
-  margin-top: 20px;
-}
-
-.search-input {
-  width: 200px;
-  padding: 10px;
 }
 
 .client-table {
   width: 80%;
   border-collapse: collapse;
-  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .client-table th,
@@ -101,6 +39,7 @@
 
 .client-table tr th {
   background-color: #1a1a1a;
+  color: white;
 }
 
 .client-table tr:hover td {

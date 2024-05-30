@@ -4,7 +4,7 @@ import '../styles/RegisterPage.css'; // Подключаем файл со ст�
 
 const RegisterPage = () => {
   const [registered, setRegistered] = useState(false);
-  const [login, setUsername] = useState('');
+  const [email, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
@@ -15,7 +15,7 @@ const RegisterPage = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ login, password })
+        body: JSON.stringify({ email, password })
       });
 
       const data = await response.json();
@@ -50,7 +50,7 @@ const RegisterPage = () => {
             type="text"
             placeholder="Логин"
             className="register-input"
-            value={login}
+            value={email}
             onChange={(e) => setUsername(e.target.value)}
           />
           <input

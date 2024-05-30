@@ -39,13 +39,14 @@ const ClientList = () => {
         <input 
           type="text" 
           placeholder="Поиск..." 
+          className="search-input"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <table className="client-table">
           <thead>
             <tr>
-              <th>Имя</th>
+              <th>Клиент</th>
               <th>Почта</th>
               <th>Телефон</th>
             </tr>

@@ -4,7 +4,7 @@ import '../styles/LoginPage.css'; // Подключаем файл со стил
 
 const LoginPage = () => {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [login, setUsername] = useState('');
+  const [email, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
@@ -15,7 +15,7 @@ const LoginPage = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ login, password })
+        body: JSON.stringify({ email, password })
       });
 
       const data = await response.json();
@@ -23,7 +23,7 @@ const LoginPage = () => {
       if (response.ok && data.status === 'OK') {
         setLoggedIn(true);
         localStorage.setItem('token', data.token);
-        localStorage.setItem('login', login); // Сохраняем имя пользователя в localStorage
+        localStorage.setItem('login', email); // Сохраняем имя пользователя в localStorage
       } else {
         setError(data.error || 'Неизвестная ошибка');
       }
@@ -51,7 +51,7 @@ const LoginPage = () => {
             type="text"
             placeholder="Логин"
             className="login-input"
-            value={login}
+            value={email}
             onChange={(e) => setUsername(e.target.value)}
           />
           <input

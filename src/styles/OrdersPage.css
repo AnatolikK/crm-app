@@ -1,10 +1,10 @@
 .orders-page {
   width: 100%;
-  margin-top: 80px;
   font-size: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: #1a1a1a;
 }
 
 .orders-title {
