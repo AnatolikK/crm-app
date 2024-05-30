@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import EditorPanel from './EditorPanel';
 
-const Template2 = () => {
+const ConstructorTemplate = () => {
   const { alias } = useParams();
   const [styles, setStyles] = useState({ backgroundColor: '#ffffff', font: 'Arial' });
 
@@ -31,15 +32,39 @@ const Template2 = () => {
     fetchStyles();
   }, [alias]);
 
+  const handleSaveStyles = async (styleData) => {
+    try {
+      const response = await fetch('http://localhost:8082/api/website/set-style', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(styleData)
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.status === 'OK') {
+        setStyles({
+          backgroundColor: styleData.background_color,
+          font: styleData.font,
+        });
+      }
+    } catch (error) {
+      console.error('Ошибка при сохранении стилей сайта:', error);
+    }
+  };
+
   return (
     <div
       className="template"
       style={{ backgroundColor: styles.backgroundColor, fontFamily: styles.font }}
     >
-      <h1>Шаблон сайта: {alias}</h1>
-      {/* Контент сайта */}
+      <h1>Конструктор сайта: {alias}</h1>
+      <EditorPanel alias={alias} onSave={handleSaveStyles} />
     </div>
   );
 };
 
-export default Template2;
+export default ConstructorTemplate;

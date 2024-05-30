@@ -1,78 +1,62 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './EditorPanel.css';
 
-const EditorPanel = ({ selectedComponent, onChangeContent, onChangeColor, onChangeSize, onChangeFontSize, onSave, alias }) => {
+const EditorPanel = ({ alias, onSave }) => {
+  const [backgroundColor, setBackgroundColor] = useState('#ffffff');
+  const [font, setFont] = useState('Arial');
+  const [availableFonts, setAvailableFonts] = useState([
+    'Arial', 'Roboto', 'Open Sans', 'Lato', 'Montserrat'
+  ]);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // Dynamically load Google Fonts
+    const link = document.createElement('link');
+    link.href = 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;700&family=Lato:wght@400;700&family=Montserrat:wght@400;700&display=swap';
+    link.rel = 'stylesheet';
+    document.head.appendChild(link);
+
+    return () => {
+      document.head.removeChild(link);
+    };
+  }, []);
+
   const handleSave = () => {
-    if (typeof onSave === 'function') {
-      onSave();
-    }
+    const styleData = {
+      alias,
+      background_color: backgroundColor,
+      font,
+    };
+    onSave(styleData);
   };
 
   const handleNavigate = () => {
-    navigate(`/${alias}`);
-  };
-
-  const handleWidthChange = (e) => {
-    onChangeSize(e.target.value, selectedComponent.height);
-  };
-
-  const handleHeightChange = (e) => {
-    onChangeSize(selectedComponent.width, e.target.value);
-  };
-
-  const handleFontSizeChange = (e) => {
-    onChangeFontSize(e.target.value);
+    window.open(`${window.location.origin}/${alias}`, '_blank');
   };
 
   return (
     <div className="editor-panel">
-      <h3>Редактирование компонента</h3>
-      <label>
-        Содержимое:
-        <input
-          type="text"
-          value={selectedComponent.content}
-          onChange={(e) => onChangeContent(e.target.value)}
-        />
-      </label>
+      <h3>Редактирование стилей сайта</h3>
       <label>
         Цвет фона:
         <input
           type="color"
-          value={selectedComponent.backgroundColor}
-          onChange={(e) => onChangeColor(e.target.value)}
+          value={backgroundColor}
+          onChange={(e) => setBackgroundColor(e.target.value)}
         />
       </label>
       <label>
-        Ширина:
-        <input
-          type="text"
-          value={selectedComponent.width}
-          onChange={handleWidthChange}
-        />
-      </label>
-      <label>
-        Высота:
-        <input
-          type="text"
-          value={selectedComponent.height}
-          onChange={handleHeightChange}
-        />
-      </label>
-      <label>
-        Размер текста:
-        <input
-          type="text"
-          value={selectedComponent.fontSize}
-          onChange={handleFontSizeChange}
-        />
+        Шрифт:
+        <select value={font} onChange={(e) => setFont(e.target.value)}>
+          {availableFonts.map((fontName) => (
+            <option key={fontName} value={fontName}>{fontName}</option>
+          ))}
+        </select>
       </label>
       <div className="editor-panel-buttons">
         <button onClick={handleSave}>Сохранить</button>
-        <button onClick={handleNavigate}>Перейти</button>
+        <button onClick={handleNavigate}>Перейти на вебсайт</button>
       </div>
     </div>
   );

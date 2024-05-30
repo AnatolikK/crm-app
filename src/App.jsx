@@ -12,8 +12,7 @@ import ProductsPage from './pages/ProductsPage';
 import clients from './components/ClientDashboard/clientsData';
 import OrdersPage from './pages/OrdersPage';
 import ConstructorPage from './pages/ConstructorPage';
-import TemplateSelector from './components/Constructor/TemplateSelector';
-import Template1 from './components/Template/Template1';
+import ConstructorTemplate from './components/Constructor/ConstructorTemplate';
 import Template2 from './components/Template/Template2';
 
 const App = () => {
@@ -31,10 +30,8 @@ const App = () => {
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/orders" element={<OrdersPage />} />
         <Route path="/constructor" element={<ConstructorPage />} />
-        <Route path="/:alias/editor" element={<TemplateSelector />} />
-        <Route path="/:alias/template1" element={<Template1 />} />
-        <Route path="/:alias/template2" element={<Template2 />} />
-        
+        <Route path="/constructor/:alias" element={<ConstructorTemplate />} />
+        <Route path="/:alias" element={<Template2 />} />
       </Routes>
     </Router>
   );

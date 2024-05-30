@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const ConstructorPage = () => {
   const [aliases, setAliases] = useState([]);
   const [newAlias, setNewAlias] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-  // Функция для выполнения GET запроса к API для получения списка созданных сайтов у пользователя
   const fetchAliases = async () => {
     try {
       const response = await fetch('http://localhost:8082/api/website/aliases', {
@@ -29,7 +29,6 @@ const ConstructorPage = () => {
     }
   };
 
-  // Функция для выполнения POST запроса к API для создания нового сайта
   const createWebsite = async () => {
     try {
       const response = await fetch('http://localhost:8082/api/website/create', {
@@ -55,6 +54,36 @@ const ConstructorPage = () => {
     }
   };
 
+  const deleteWebsite = async (alias) => {
+    try {
+      const response = await fetch(`http://localhost:8082/api/website/delete/${alias}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.status === 'OK') {
+        fetchAliases();
+      } else {
+        setError(data.error || 'Неизвестная ошибка');
+      }
+    } catch (error) {
+      console.error('Ошибка при удалении сайта:', error);
+      setError('Ошибка при удалении сайта. Попробуйте снова позже.');
+    }
+  };
+
+  const handleSelectWebsite = (alias) => {
+    navigate(`/constructor/${alias}`);
+  };
+
+  const handleOpenWebsite = (alias) => {
+    window.open(`${window.location.origin}/${alias}`, '_blank');; // Убедитесь, что URL корректный
+  };
+
   useEffect(() => {
     fetchAliases();
   }, []);
@@ -69,7 +98,9 @@ const ConstructorPage = () => {
             <ul>
               {aliases.map((alias, index) => (
                 <li key={index}>
-                  <Link to={`/${alias}/editor`}>{alias}</Link>
+                  <button onClick={() => handleSelectWebsite(alias)}>Редактировать</button>
+                  <button onClick={() => handleOpenWebsite(alias)}>Открыть</button>
+                  <button onClick={() => deleteWebsite(alias)}>Удалить</button>
                 </li>
               ))}
             </ul>
