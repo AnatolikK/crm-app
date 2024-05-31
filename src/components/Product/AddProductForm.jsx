@@ -1,20 +1,46 @@
 import React, { useState } from 'react';
+import { API_BASE_URL } from '../ApiConfig';
 
-const AddProductForm = ({ onAddProduct }) => {
+const AddProductForm = ({ siteAlias }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [imageId, setImageId] = useState('');
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const newProduct = {
-      name,
-      description,
-      price,
-      image_id: parseInt(imageId, 10)
-    };
-    onAddProduct(newProduct);
+    try {
+      // Создание нового товара
+      const response = await fetch(`${API_BASE_URL}/product/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+          alias: siteAlias,
+          product_info: {
+            name,
+            description,
+            price: parseFloat(price),
+            image_id: parseInt(imageId, 10)
+          }
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.status === 'OK') {
+        // Обновление страницы после успешного добавления товара
+        window.location.reload();
+      } else {
+        setError(data.error || 'Ошибка при добавлении товара');
+      }
+    } catch (error) {
+      console.error('Ошибка при добавлении товара:', error);
+      setError('Ошибка при добавлении товара. Попробуйте снова позже.');
+    }
   };
 
   return (
@@ -44,6 +70,7 @@ const AddProductForm = ({ onAddProduct }) => {
         value={imageId} 
         onChange={(e) => setImageId(e.target.value)} 
       />
+      {error && <div className="error-message">{error}</div>}
       <button type="submit" className="product-details-button">Добавить</button>
     </form>
   );

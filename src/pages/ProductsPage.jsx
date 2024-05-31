@@ -12,11 +12,11 @@ const ProductPage = () => {
   const [showAddForm, setShowAddForm] = useState(false);
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [userAliases, setUserAliases] = useState([]);
-  const [aliasesLoaded, setAliasesLoaded] = useState(false);
+  const [siteName, setSiteName] = useState('');
+  const [siteAlias, setSiteAlias] = useState('');
   const [error, setError] = useState('');
 
-  const fetchUserAliases = async () => {
+  const fetchSiteName = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/website/aliases`, {
         method: 'GET',
@@ -27,17 +27,17 @@ const ProductPage = () => {
 
       const data = await response.json();
 
-      if (response.ok && data.status === 'OK') {
-        setUserAliases(data.aliases);
-        setAliasesLoaded(true);
+      if (response.ok && data.status === 'OK' && data.aliases.length > 0) {
+        const firstAlias = data.aliases[0];
+        setSiteName(firstAlias);  // Берем первый алиас из списка
+        setSiteAlias(firstAlias); // Устанавливаем алиас для запроса товаров
+        fetchProducts(firstAlias); // Запрашиваем товары с использованием полученного алиаса
       } else {
         setError(data.error || 'Неизвестная ошибка');
-        setAliasesLoaded(true);
       }
     } catch (error) {
-      console.error('Ошибка при получении списка alias:', error);
-      setError('Ошибка при получении списка alias. Попробуйте снова позже.');
-      setAliasesLoaded(true);
+      console.error('Ошибка при получении названия сайта:', error);
+      setError('Ошибка при получении названия сайта. Попробуйте снова позже.');
     }
   };
 
@@ -55,12 +55,17 @@ const ProductPage = () => {
       if (response.ok && data.status === 'OK') {
         setProducts(data.products);
       } else {
-        console.error('Ошибка при получении списка товаров:', data.error || 'Неизвестная ошибка');
+        setError(data.error || 'Неизвестная ошибка');
       }
     } catch (error) {
       console.error('Ошибка при получении списка товаров:', error);
+      setError('Ошибка при получении списка товаров. Попробуйте снова позже.');
     }
   };
+
+  useEffect(() => {
+    fetchSiteName();
+  }, []);
 
   const handleProductClick = (product) => {
     setSelectedProduct(product);
@@ -78,30 +83,6 @@ const ProductPage = () => {
     setShowAddForm(false);
   };
 
-  const handleAddProduct = async (newProduct) => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/product/create`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        },
-        body: JSON.stringify({ alias, product_info: newProduct })
-      });
-
-      const data = await response.json();
-
-      if (response.ok && data.status === 'OK') {
-        setProducts([...products, newProduct]);
-        handleCloseAddForm();
-      } else {
-        console.error('Ошибка при добавлении товара:', data.error || 'Неизвестная ошибка');
-      }
-    } catch (error) {
-      console.error('Ошибка при добавлении товара:', error);
-    }
-  };
-
   const filteredProducts = products.filter(product =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     product.category?.toLowerCase().includes(searchTerm.toLowerCase())
@@ -115,25 +96,11 @@ const ProductPage = () => {
     </tr>
   );
 
-  useEffect(() => {
-    fetchUserAliases();
-  }, []);
-
-  useEffect(() => {
-    if (aliasesLoaded) {
-      if (userAliases.includes(alias)) {
-        fetchProducts(alias);
-      } else {
-        setError('У вас нет доступа к этому сайту.');
-      }
-    }
-  }, [aliasesLoaded, alias, userAliases]);
-
   return (
     <div>
       <NavigationControlPanel />
       <div className="product-list-container">
-        <h2>Список товаров для {alias}</h2>
+        <h2>Список товаров для {siteName}</h2>
         <div className="search-container">
           <input
             type="text"
@@ -168,11 +135,12 @@ const ProductPage = () => {
           <div className="modal-wrapper" onClick={handleCloseAddForm}>
             <div className="modal" onClick={(e) => e.stopPropagation()}>
               <span className="close" onClick={handleCloseAddForm}>&times;</span>
-              <AddProductForm onAddProduct={handleAddProduct} />
+              <AddProductForm siteAlias={siteAlias} />
             </div>
           </div>
         )}
       </div>
+      {error && <div className="error-message">{error}</div>}
     </div>
   );
 };
