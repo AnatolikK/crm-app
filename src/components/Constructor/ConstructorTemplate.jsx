@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import EditorPanel from './EditorPanel';
+import { API_BASE_URL } from '../ApiConfig';
 
 const ConstructorTemplate = () => {
   const { alias } = useParams();
@@ -9,7 +10,7 @@ const ConstructorTemplate = () => {
   useEffect(() => {
     const fetchStyles = async () => {
       try {
-        const response = await fetch(`http://localhost:8082/api/website/get-style/${alias}`, {
+        const response = await fetch(`${API_BASE_URL}/website/get-style/${alias}`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -34,7 +35,7 @@ const ConstructorTemplate = () => {
 
   const handleSaveStyles = async (styleData) => {
     try {
-      const response = await fetch('http://localhost:8082/api/website/set-style', {
+      const response = await fetch(`${API_BASE_URL}/website/set-style`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

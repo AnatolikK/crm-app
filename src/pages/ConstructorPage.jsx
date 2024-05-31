@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../components/ApiConfig';
 
 const ConstructorPage = () => {
   const [aliases, setAliases] = useState([]);
@@ -9,7 +10,7 @@ const ConstructorPage = () => {
 
   const fetchAliases = async () => {
     try {
-      const response = await fetch('http://localhost:8082/api/website/aliases', {
+      const response = await fetch(`${API_BASE_URL}/website/aliases`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -31,7 +32,7 @@ const ConstructorPage = () => {
 
   const createWebsite = async () => {
     try {
-      const response = await fetch('http://localhost:8082/api/website/create', {
+      const response = await fetch(`${API_BASE_URL}/website/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -56,7 +57,7 @@ const ConstructorPage = () => {
 
   const deleteWebsite = async (alias) => {
     try {
-      const response = await fetch(`http://localhost:8082/api/website/delete/${alias}`, {
+      const response = await fetch(`${API_BASE_URL}/website/delete/${alias}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -81,7 +82,7 @@ const ConstructorPage = () => {
   };
 
   const handleOpenWebsite = (alias) => {
-    window.open(`${window.location.origin}/${alias}`, '_blank');; // Убедитесь, что URL корректный
+    window.open(`${window.location.origin}/${alias}`, '_blank');
   };
 
   useEffect(() => {

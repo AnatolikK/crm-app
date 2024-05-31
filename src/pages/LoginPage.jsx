@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import '../styles/LoginPage.css'; // Подключаем файл со стилями
+import { API_BASE_URL } from '../components/ApiConfig';
 
 const LoginPage = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -10,7 +11,7 @@ const LoginPage = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('http://localhost:8082/api/admin/sign-in', {
+      const response = await fetch(`${API_BASE_URL}/admin/sign-in`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

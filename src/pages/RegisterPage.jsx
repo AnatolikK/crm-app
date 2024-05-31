@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import '../styles/RegisterPage.css'; // Подключаем файл со стилями
+import { API_BASE_URL } from '../components/ApiConfig';
 
 const RegisterPage = () => {
   const [registered, setRegistered] = useState(false);
@@ -10,7 +11,7 @@ const RegisterPage = () => {
 
   const handleRegister = async () => {
     try {
-      const response = await fetch('http://localhost:8082/api/admin/sign-up', {
+      const response = await fetch(`${API_BASE_URL}/admin/sign-up`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

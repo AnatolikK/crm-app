@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 
 const AddProductForm = ({ onAddProduct }) => {
   const [name, setName] = useState('');
-  const [category, setCategory] = useState('');
+  const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
+  const [imageId, setImageId] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const newProduct = {
-      id: Math.floor(Math.random() * 1000),
       name,
-      category,
+      description,
       price,
+      image_id: parseInt(imageId, 10)
     };
     onAddProduct(newProduct);
   };
@@ -27,15 +28,21 @@ const AddProductForm = ({ onAddProduct }) => {
       />
       <input 
         type="text" 
-        placeholder="Категория" 
-        value={category} 
-        onChange={(e) => setCategory(e.target.value)} 
+        placeholder="Описание" 
+        value={description} 
+        onChange={(e) => setDescription(e.target.value)} 
       />
       <input 
         type="text" 
         placeholder="Цена" 
         value={price} 
         onChange={(e) => setPrice(e.target.value)} 
+      />
+      <input 
+        type="text" 
+        placeholder="ID изображения" 
+        value={imageId} 
+        onChange={(e) => setImageId(e.target.value)} 
       />
       <button type="submit" className="product-details-button">Добавить</button>
     </form>
