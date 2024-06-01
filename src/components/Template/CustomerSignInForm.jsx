@@ -12,7 +12,7 @@ const CustomerSignInForm = ({ alias, onSuccess }) => {
       const response = await fetch(`${API_BASE_URL}/customer/sign-in`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({ alias, email, password })
       });

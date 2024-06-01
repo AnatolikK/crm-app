@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { API_BASE_URL } from '../ApiConfig';
 
-const ProductList = ({ alias }) => {
+const ProductList = ({ alias, onAddToCart }) => {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState('');
 
@@ -41,6 +41,7 @@ const ProductList = ({ alias }) => {
             <th>Название</th>
             <th>Категория</th>
             <th>Цена</th>
+            <th>Действие</th>
           </tr>
         </thead>
         <tbody>
@@ -49,6 +50,9 @@ const ProductList = ({ alias }) => {
               <td>{product.name}</td>
               <td>{product.category}</td>
               <td>{product.price}</td>
+              <td>
+                <button onClick={() => onAddToCart(product)}>Добавить в корзину</button>
+              </td>
             </tr>
           ))}
         </tbody>

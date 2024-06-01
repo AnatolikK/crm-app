@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import EditorPanel from './EditorPanel';
 import CustomerSignInForm from '../Template/CustomerSignInForm';
 import CustomerSignUpForm from '../Template/CustomerSignUpForm';
+import ProductList from '../Template/ProductList';
+import Cart from '../Template/Cart'; // Импортируем новый компонент
 import { API_BASE_URL } from '../ApiConfig';
 
 const ConstructorTemplate = () => {
@@ -11,6 +13,7 @@ const ConstructorTemplate = () => {
   const [showSignIn, setShowSignIn] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
   const [customerLoggedIn, setCustomerLoggedIn] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     const fetchStyles = async () => {
@@ -72,6 +75,32 @@ const ConstructorTemplate = () => {
     setShowSignUp(false);
   };
 
+  const handleAddToCart = (product) => {
+    setCartItems(prevItems => {
+      const existingItem = prevItems.find(item => item.id === product.id);
+      if (existingItem) {
+        return prevItems.map(item =>
+          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      } else {
+        return [...prevItems, { ...product, quantity: 1 }];
+      }
+    });
+  };
+
+  const handleRemoveFromCart = (product) => {
+    setCartItems(prevItems => {
+      const existingItem = prevItems.find(item => item.id === product.id);
+      if (existingItem.quantity === 1) {
+        return prevItems.filter(item => item.id !== product.id);
+      } else {
+        return prevItems.map(item =>
+          item.id === product.id ? { ...item, quantity: item.quantity - 1 } : item
+        );
+      }
+    });
+  };
+
   const handleNavigate = () => {
     window.open(`${window.location.origin}/${alias}`, '_blank');
   };
@@ -95,6 +124,10 @@ const ConstructorTemplate = () => {
       {showSignUp && (
         <CustomerSignUpForm alias={alias} onSuccess={handleSignUpSuccess} />
       )}
+      {/* Выводим список товаров */}
+      <ProductList alias={alias} onAddToCart={handleAddToCart} />
+      {/* Выводим корзину */}
+      <Cart cartItems={cartItems} onAdd={handleAddToCart} onRemove={handleRemoveFromCart} />
     </div>
   );
 };
