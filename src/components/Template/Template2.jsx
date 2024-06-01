@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import CustomerSignInForm from '../Template/CustomerSignInForm';
+import CustomerSignUpForm from '../Template/CustomerSignUpForm';
 import { API_BASE_URL } from '../ApiConfig';
 
 const Template2 = () => {
   const { alias } = useParams();
   const [styles, setStyles] = useState({ backgroundColor: '#ffffff', font: 'Arial' });
+  const [showSignIn, setShowSignIn] = useState(false);
+  const [showSignUp, setShowSignUp] = useState(false);
+  const [customerLoggedIn, setCustomerLoggedIn] = useState(false);
 
   useEffect(() => {
     const fetchStyles = async () => {
@@ -32,12 +37,34 @@ const Template2 = () => {
     fetchStyles();
   }, [alias]);
 
+  const handleSignInSuccess = () => {
+    setCustomerLoggedIn(true);
+    setShowSignIn(false);
+  };
+
+  const handleSignUpSuccess = () => {
+    setShowSignIn(true);
+    setShowSignUp(false);
+  };
+
   return (
     <div
       className="template"
       style={{ backgroundColor: styles.backgroundColor, fontFamily: styles.font }}
     >
       <h1>Шаблон сайта: {alias}</h1>
+      {!customerLoggedIn && (
+        <div>
+          <button onClick={() => setShowSignIn(true)}>Войти</button>
+          <button onClick={() => setShowSignUp(true)}>Регистрация</button>
+        </div>
+      )}
+      {showSignIn && (
+        <CustomerSignInForm alias={alias} onSuccess={handleSignInSuccess} />
+      )}
+      {showSignUp && (
+        <CustomerSignUpForm alias={alias} onSuccess={handleSignUpSuccess} />
+      )}
       {/* Контент сайта */}
     </div>
   );

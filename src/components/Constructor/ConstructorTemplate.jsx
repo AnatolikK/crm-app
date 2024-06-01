@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import EditorPanel from './EditorPanel';
+import CustomerSignInForm from '../Template/CustomerSignInForm';
+import CustomerSignUpForm from '../Template/CustomerSignUpForm';
 import { API_BASE_URL } from '../ApiConfig';
 
 const ConstructorTemplate = () => {
   const { alias } = useParams();
   const [styles, setStyles] = useState({ backgroundColor: '#ffffff', font: 'Arial' });
+  const [showSignIn, setShowSignIn] = useState(false);
+  const [showSignUp, setShowSignUp] = useState(false);
+  const [customerLoggedIn, setCustomerLoggedIn] = useState(false);
 
   useEffect(() => {
     const fetchStyles = async () => {
@@ -57,13 +62,39 @@ const ConstructorTemplate = () => {
     }
   };
 
+  const handleSignInSuccess = () => {
+    setCustomerLoggedIn(true);
+    setShowSignIn(false);
+  };
+
+  const handleSignUpSuccess = () => {
+    setShowSignIn(true);
+    setShowSignUp(false);
+  };
+
+  const handleNavigate = () => {
+    window.open(`${window.location.origin}/${alias}`, '_blank');
+  };
+
   return (
     <div
       className="template"
       style={{ backgroundColor: styles.backgroundColor, fontFamily: styles.font }}
     >
       <h1>Конструктор сайта: {alias}</h1>
-      <EditorPanel alias={alias} onSave={handleSaveStyles} />
+      <EditorPanel alias={alias} onSave={handleSaveStyles} onNavigate={handleNavigate} />
+      {!customerLoggedIn && (
+        <div>
+          <button onClick={() => setShowSignIn(true)}>Войти</button>
+          <button onClick={() => setShowSignUp(true)}>Регистрация</button>
+        </div>
+      )}
+      {showSignIn && (
+        <CustomerSignInForm alias={alias} onSuccess={handleSignInSuccess} />
+      )}
+      {showSignUp && (
+        <CustomerSignUpForm alias={alias} onSuccess={handleSignUpSuccess} />
+      )}
     </div>
   );
 };
