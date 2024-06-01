@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import CustomerSignInForm from '../Template/CustomerSignInForm';
 import CustomerSignUpForm from '../Template/CustomerSignUpForm';
+import ProductList from '../Template/ProductList'; // Импортируем новый компонент
 import { API_BASE_URL } from '../ApiConfig';
 
 const Template2 = () => {
@@ -65,7 +66,8 @@ const Template2 = () => {
       {showSignUp && (
         <CustomerSignUpForm alias={alias} onSuccess={handleSignUpSuccess} />
       )}
-      {/* Контент сайта */}
+      {/* Выводим список товаров */}
+      <ProductList alias={alias} />
     </div>
   );
 };
