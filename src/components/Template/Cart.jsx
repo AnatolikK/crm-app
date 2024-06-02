@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Cart = ({ cartItems, onAdd, onRemove }) => {
+const Cart = ({ cartItems, onAdd, onRemove, onMakeOrder }) => {
   const getTotalItems = () => {
     return cartItems.reduce((total, item) => total + item.quantity, 0);
   };
@@ -37,6 +37,7 @@ const Cart = ({ cartItems, onAdd, onRemove }) => {
           ))}
         </tbody>
       </table>
+      <button onClick={onMakeOrder}>Сделать заказ</button>
     </div>
   );
 };

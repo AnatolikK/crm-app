@@ -102,7 +102,7 @@ const Template2 = () => {
 
       const data = await response.json();
 
-      if (response.ok) {
+      if (response.ok && data.status === 'OK') {
         fetchCartItems(); // Обновляем корзину после добавления товара
       } else {
         console.error('Ошибка при добавлении товара в корзину:', data.error);
@@ -126,7 +126,7 @@ const Template2 = () => {
 
       const data = await response.json();
 
-      if (response.ok) {
+      if (response.ok && data.status === 'OK') {
         fetchCartItems(); // Обновляем корзину после изменения количества товара
       } else {
         console.error('Ошибка при изменении количества товара в корзине:', data.error);
@@ -139,6 +139,38 @@ const Template2 = () => {
   const handleRemoveFromCart = async (product) => {
     const newCount = product.quantity - 1;
     handleChangeCartItemCount(product, newCount);
+  };
+
+  const handleMakeOrder = async () => {
+    const token = localStorage.getItem('customerToken');
+
+    // Проверяем, что корзина не пуста
+    if (cartItems.length === 0) {
+      alert('Корзина пуста. Добавьте товары в корзину перед созданием заказа.');
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/order/make`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.status === 'OK') {
+        setCartItems([]); // Обнуляем корзину после успешного создания заказа
+        alert('Заказ успешно создан');
+      } else {
+        console.error('Ошибка при создании заказа:', data.error);
+        alert(`Ошибка при создании заказа: ${data.error}`);
+      }
+    } catch (error) {
+      console.error('Ошибка при создании заказа:', error);
+      alert('Ошибка при создании заказа. Попробуйте снова позже.');
+    }
   };
 
   return (
@@ -160,7 +192,12 @@ const Template2 = () => {
         <CustomerSignUpForm alias={alias} onSuccess={handleSignUpSuccess} />
       )}
       <ProductList alias={alias} onAddToCart={handleAddToCart} />
-      <Cart cartItems={cartItems} onAdd={handleAddToCart} onRemove={handleRemoveFromCart} />
+      <Cart 
+        cartItems={cartItems} 
+        onAdd={handleAddToCart} 
+        onRemove={handleRemoveFromCart} 
+        onMakeOrder={handleMakeOrder} 
+      />
     </div>
   );
 };
