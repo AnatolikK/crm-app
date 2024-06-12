@@ -64,11 +64,26 @@
     width: calc(100% - 20px);
     padding: 10px;
     margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
+    border-radius: 0px;
+    border: none;
+    border-bottom: 1px solid black; /* Черная подчеркивающая линия */
+    background-color: white; /* Белый цвет фона */
+    color: #0056b3;
+    font-size: 1em;
+    caret-color: #0056b3
   }
   
+  .register-input:-webkit-autofill,
+  .register-input:-webkit-autofill:hover, 
+  .register-input:-webkit-autofill:focus, 
+  .register-input:-webkit-autofill:active {
+      -webkit-text-fill-color: #0056b3; /* Цвет текста при автозаполнении */
+      font-size: 1em; /* Размер текста */
+      transition: background-color 5000s ease-in-out 0s; /* Задержка для анимации фона */
+      caret-color: #0056b3; /* Цвет курсора */
+  }
+
+
   .register-button {
     width: 100%;
     padding: 10px;
@@ -102,3 +117,8 @@
     height: auto;
   }
   
+  @media only screen and (max-width: 768px) {
+    .image-container {
+      display: none; /* Скрываем изображение на устройствах с шириной экрана до 768px */
+    }
+  }
