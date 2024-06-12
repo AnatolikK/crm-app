@@ -3,31 +3,63 @@ import NavigationControlPanel from '../components/NavigationControlPanel';
 import EditProfileForm from '../components/PersonalDashboardComponent/EditProfileForm';
 import MessageSender from '../components/PersonalDashboardComponent/MessageSender';
 import Chart from '../components/PersonalDashboardComponent/Chart';
+import { API_BASE_URL } from '../components/ApiConfig';
 import '../styles/PersonalDashboard.css';
 
 const PersonalDashboard = () => {
-  const initialUserData = JSON.parse(localStorage.getItem('userData')) || {
-    username: 'John Doe',
-    email: 'johndoe@example.com',
-    phone: '123-456-7890',
+  const [userData, setUserData] = useState({
+    first_name: 'John',
+    last_name: 'Doe',
+    father_name: 'Smith',
+    city: 'Example City',
+    image_id: null,
     photo: 'https://via.placeholder.com/150',
-  };
-
-  const [userData, setUserData] = useState(initialUserData);
+  });
   const [editMode, setEditMode] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/admin/get-profile`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+
+        const result = await response.json();
+        if (result.status === 'OK' && result.profile) {
+          setUserData(result.profile);
+          if (result.profile.image_id) {
+            const imageResponse = await fetch(`${API_BASE_URL}/image/download/${result.profile.image_id}`, {
+              method: 'GET',
+              headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+              }
+            });
+            if (imageResponse.ok) {
+              const imageBlob = await imageResponse.blob();
+              const imageUrl = URL.createObjectURL(imageBlob);
+              setUserData(prevData => ({ ...prevData, photo: imageUrl }));
+            } else {
+              console.error('Ошибка загрузки изображения');
+            }
+          }
+        } else {
+          console.error('Ошибка получения профиля', result.error);
+        }
+      } catch (error) {
+        console.error('Ошибка получения профиля', error);
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
 
   const handleSaveChanges = (updatedUserData) => {
-    localStorage.setItem('userData', JSON.stringify(updatedUserData));
     setUserData(updatedUserData);
     setEditMode(false);
   };
-
-  useEffect(() => {
-    if (!editMode) {
-      setSelectedImage(null);
-    }
-  }, [editMode]);
 
   return (
     <div>
@@ -40,21 +72,17 @@ const PersonalDashboard = () => {
             ) : (
               <div className="user-info">
                 <div>
-                  <img src={selectedImage || userData.photo} alt="User" className="profile-photo" />
+                  <img src={userData.photo} alt="User" className="profile-photo" />
                 </div>
                 <div className="info-section">
                   <div className="profile-header">
                     <h3>Персональная информация</h3>
                     <button onClick={() => setEditMode(true)}>Редактировать</button>
                   </div>
-                  <p>Логин: {userData.username}</p>
-                  <p>Почта: {userData.email}</p>
-                  <p>Телефон: {userData.phone}</p>
-                  <div className="messengers">
-                    <span>Мессенджеры</span>
-                    <img src="/public/vk_icon.png" alt="VK" />
-                    <img src="/public/telegram_icon.png" alt="Telegram" />
-                  </div>
+                  <p>Имя: {userData.first_name}</p>
+                  <p>Фамилия: {userData.last_name}</p>
+                  <p>Отчество: {userData.father_name}</p>
+                  <p>Город: {userData.city}</p>
                 </div>
               </div>
             )}
