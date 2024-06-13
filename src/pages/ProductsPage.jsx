@@ -85,7 +85,7 @@ const ProductPage = () => {
 
   const filteredProducts = products.filter(product =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    product.category?.toLowerCase().includes(searchTerm.toLowerCase())
+    product.description?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const renderProductRow = (product) => (
@@ -94,14 +94,15 @@ const ProductPage = () => {
       <td>{product.description}</td>
       <td>{product.price}</td>
       <td>
-        {product.image_id && (
+        {product.images_id && product.images_id.split(' ').map(imageId => (
           <img 
-            src={`${API_BASE_URL}/image/download/${product.image_id}`} 
+            key={imageId}
+            src={`${API_BASE_URL}/image/download/${imageId}`} 
             alt={product.name} 
             className="product-image" 
             onError={(e) => e.target.src = '/path/to/placeholder/image.jpg'} // Замените на путь к изображению-заполнителю
           />
-        )}
+        ))}
       </td>
     </tr>
   );
@@ -127,7 +128,7 @@ const ProductPage = () => {
               <th>Название</th>
               <th>Описание</th>
               <th>Цена</th>
-              <th>Изображение</th>
+              <th>Изображения</th>
             </tr>
           </thead>
           <tbody>

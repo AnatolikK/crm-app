@@ -5,14 +5,17 @@ const AddProductForm = ({ siteAlias }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
-  const [imageId, setImageId] = useState(null);
+  const [imageIds, setImageIds] = useState([]);
   const [error, setError] = useState('');
-  const [imageFile, setImageFile] = useState(null);
 
   const handleImageChange = async (e) => {
-    const file = e.target.files[0];
-    if (file) {
+    const files = e.target.files;
+    const newImageIds = [];
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
       const reader = new FileReader();
+
       reader.readAsArrayBuffer(file);
       reader.onloadend = async () => {
         const byteArray = new Uint8Array(reader.result);
@@ -28,7 +31,8 @@ const AddProductForm = ({ siteAlias }) => {
 
           const result = await response.json();
           if (result.id) {
-            setImageId(result.id);
+            newImageIds.push(result.id);
+            setImageIds(prevIds => [...prevIds, result.id]);
           } else {
             setError(result.error || 'Ошибка загрузки изображения');
           }
@@ -46,8 +50,8 @@ const AddProductForm = ({ siteAlias }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!imageId) {
-      setError('Необходимо загрузить изображение');
+    if (imageIds.length === 0) {
+      setError('Необходимо загрузить хотя бы одно изображение');
       return;
     }
 
@@ -64,7 +68,7 @@ const AddProductForm = ({ siteAlias }) => {
             name,
             description,
             price: parseFloat(price),
-            image_id: imageId
+            images_id: imageIds.join(' ')
           }
         })
       });
@@ -106,14 +110,19 @@ const AddProductForm = ({ siteAlias }) => {
       <input 
         type="file" 
         accept="image/*" 
+        multiple
         onChange={handleImageChange} 
       />
-      {imageId && <input 
-        type="text" 
-        placeholder="ID изображения" 
-        value={imageId} 
-        readOnly 
-      />}
+      {imageIds.length > 0 && (
+        <div>
+          <h4>Загруженные изображения:</h4>
+          <ul>
+            {imageIds.map((id, index) => (
+              <li key={index}>ID изображения: {id}</li>
+            ))}
+          </ul>
+        </div>
+      )}
       {error && <div className="error-message">{error}</div>}
       <button type="submit" className="product-details-button">Добавить</button>
     </form>
