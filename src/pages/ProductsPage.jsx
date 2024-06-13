@@ -13,8 +13,16 @@ const ProductPage = () => {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [siteName, setSiteName] = useState('');
-  const [siteAlias, setSiteAlias] = useState('');
+  const [siteAlias, setSiteAlias] = useState(alias || '');
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (!siteAlias) {
+      fetchSiteName();
+    } else {
+      fetchProducts(siteAlias);
+    }
+  }, [siteAlias]);
 
   const fetchSiteName = async () => {
     try {
@@ -29,9 +37,9 @@ const ProductPage = () => {
 
       if (response.ok && data.status === 'OK' && data.aliases.length > 0) {
         const firstAlias = data.aliases[0];
-        setSiteName(firstAlias);  // Берем первый алиас из списка
-        setSiteAlias(firstAlias); // Устанавливаем алиас для запроса товаров
-        fetchProducts(firstAlias); // Запрашиваем товары с использованием полученного алиаса
+        setSiteName(firstAlias);
+        setSiteAlias(firstAlias);
+        fetchProducts(firstAlias);
       } else {
         setError(data.error || 'Неизвестная ошибка');
       }
@@ -62,10 +70,6 @@ const ProductPage = () => {
       setError('Ошибка при получении списка товаров. Попробуйте снова позже.');
     }
   };
-
-  useEffect(() => {
-    fetchSiteName();
-  }, []);
 
   const handleProductClick = (product) => {
     setSelectedProduct(product);
@@ -100,7 +104,7 @@ const ProductPage = () => {
             src={`${API_BASE_URL}/image/download/${imageId}`} 
             alt={product.name} 
             className="product-image" 
-            onError={(e) => e.target.src = '/path/to/placeholder/image.jpg'} // Замените на путь к изображению-заполнителю
+            onError={(e) => e.target.src = '/path/to/placeholder/image.jpg'} 
           />
         ))}
       </td>
@@ -139,7 +143,7 @@ const ProductPage = () => {
           <div className="modal-wrapper" onClick={handleCloseProductDetails}>
             <div className="modal" onClick={(e) => e.stopPropagation()}>
               <span className="close" onClick={handleCloseProductDetails}>&times;</span>
-              <ProductDetails product={selectedProduct} />
+              <ProductDetails product={selectedProduct} alias={siteAlias} />
             </div>
           </div>
         )}
