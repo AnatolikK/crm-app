@@ -5,13 +5,53 @@ const AddProductForm = ({ siteAlias }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
-  const [imageId, setImageId] = useState('');
+  const [imageId, setImageId] = useState(null);
   const [error, setError] = useState('');
+  const [imageFile, setImageFile] = useState(null);
+
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsArrayBuffer(file);
+      reader.onloadend = async () => {
+        const byteArray = new Uint8Array(reader.result);
+        try {
+          const response = await fetch(`${API_BASE_URL}/image/upload`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'image/jpeg',
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: byteArray
+          });
+
+          const result = await response.json();
+          if (result.id) {
+            setImageId(result.id);
+          } else {
+            setError(result.error || 'Ошибка загрузки изображения');
+          }
+        } catch (error) {
+          setError('Ошибка загрузки изображения');
+          console.error('Ошибка загрузки изображения:', error);
+        }
+      };
+      reader.onerror = (error) => {
+        setError('Ошибка чтения файла изображения');
+        console.error('Ошибка чтения файла изображения:', error);
+      };
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!imageId) {
+      setError('Необходимо загрузить изображение');
+      return;
+    }
+
     try {
-      // Создание нового товара
       const response = await fetch(`${API_BASE_URL}/product/create`, {
         method: 'POST',
         headers: {
@@ -24,7 +64,7 @@ const AddProductForm = ({ siteAlias }) => {
             name,
             description,
             price: parseFloat(price),
-            image_id: parseInt(imageId, 10)
+            image_id: imageId
           }
         })
       });
@@ -32,7 +72,6 @@ const AddProductForm = ({ siteAlias }) => {
       const data = await response.json();
 
       if (response.ok && data.status === 'OK') {
-        // Обновление страницы после успешного добавления товара
         window.location.reload();
       } else {
         setError(data.error || 'Ошибка при добавлении товара');
@@ -65,11 +104,16 @@ const AddProductForm = ({ siteAlias }) => {
         onChange={(e) => setPrice(e.target.value)} 
       />
       <input 
+        type="file" 
+        accept="image/*" 
+        onChange={handleImageChange} 
+      />
+      {imageId && <input 
         type="text" 
         placeholder="ID изображения" 
         value={imageId} 
-        onChange={(e) => setImageId(e.target.value)} 
-      />
+        readOnly 
+      />}
       {error && <div className="error-message">{error}</div>}
       <button type="submit" className="product-details-button">Добавить</button>
     </form>

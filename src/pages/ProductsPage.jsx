@@ -91,8 +91,18 @@ const ProductPage = () => {
   const renderProductRow = (product) => (
     <tr key={product.id} onClick={() => handleProductClick(product)}>
       <td>{product.name}</td>
-      <td>{product.category}</td>
+      <td>{product.description}</td>
       <td>{product.price}</td>
+      <td>
+        {product.image_id && (
+          <img 
+            src={`${API_BASE_URL}/image/download/${product.image_id}`} 
+            alt={product.name} 
+            className="product-image" 
+            onError={(e) => e.target.src = '/path/to/placeholder/image.jpg'} // Замените на путь к изображению-заполнителю
+          />
+        )}
+      </td>
     </tr>
   );
 
@@ -115,8 +125,9 @@ const ProductPage = () => {
           <thead>
             <tr>
               <th>Название</th>
-              <th>Категория</th>
+              <th>Описание</th>
               <th>Цена</th>
+              <th>Изображение</th>
             </tr>
           </thead>
           <tbody>
