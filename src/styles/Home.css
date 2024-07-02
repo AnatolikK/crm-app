@@ -63,6 +63,14 @@
     border-radius: 40px;
 }
 
+.block-1 .cta-button a{
+    color: #ffffff;
+}
+
+.block-1 .cta-button:hover{
+    background-color: #10101E;
+}
+
 .block-2, .block-3, .block-4 {
     padding: 40px;
 }
@@ -80,6 +88,10 @@
 
 .block-2 h2{
     font-size: 3em;
+}
+
+.block-2 .cta-button{
+    background-color: #FFF1C2;
 }
 
 .advertising {
@@ -105,8 +117,17 @@
 
 .feature-1 .cta-button{
     color: #5A57FF;
-    background-color: #FFD74B;
+    background-color: #FFF1C2;
     border-radius: 40px;
+}
+
+.feature-1 .cta-button:hover{
+    background-color: #FFD74B;
+    color: #10101E;
+}
+
+.feature-1 .cta-button a:hover{
+    color: #10101E;
 }
 
 .feature-2 {
@@ -226,7 +247,7 @@
 }
 
 .cta-button:hover {
-    background-color: #333;
+    background-color: #5A57FF;
     color: #fff;
     transform: scale(1.05);
 }
@@ -239,6 +260,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.block-4 .cta-button a{
+    color: #10101E;
+}
+
+.block-4 .cta-button:hover{
+    color: #5A57FF;
 }
 
 .footer p {

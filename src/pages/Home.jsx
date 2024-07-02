@@ -36,7 +36,7 @@ const Home = () => {
             <div className="section_text">
               <h1>Создайте сайт и начните продавать уже сегодня!</h1>
               <p>Превратите свое хобби в прибыльное дело с нашей CRM системой для индивидуальных мастеров</p>
-              <button className="cta-button">Начать сейчас</button>
+              <button className="cta-button"><a href="/register">Начать сейчас</a></button>
             </div>
             <div className='section-img'>
               <img src="/Home1.png" alt="абоба" />
@@ -48,7 +48,7 @@ const Home = () => {
               <h2>Готовые дизайны</h2>
               <p>В Maestro уже готовы несколько красивых вариантов дизайна для сайта. Поэтому вам остается только наполнить своей информацией готовый шаблон и опубликовать сайт.</p>
               <img src='/валик.png'/>
-              <button className="cta-button">Выбрать шаблон</button>
+              <button className="cta-button"><a href="/register">Выбрать шаблон</a></button>
             </div>
             <div className="feature feature-2">
               <h2>Работа с заявками</h2>
@@ -83,7 +83,7 @@ const Home = () => {
           <div className="block block-4" data-aos="fade-up">
             <h2>Попробуйте сейчас</h2>
             <p>Ваш бизнес начинается с сайта — запустите его за 15 минут, без программистов и дизайнеров</p>
-            <button className="cta-button">Создать сайт бесплатно</button>
+            <button className="cta-button"><a href="/register">Создать сайт бесплатно</a></button>
           </div>
           <div className="footer">
             <p>MAESTRO</p>

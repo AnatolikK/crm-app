@@ -62,40 +62,48 @@ const PersonalDashboard = () => {
   };
 
   return (
-    <div>
-      <NavigationControlPanel />
-      <div className="personal-dashboard">
-        <div className="top-section">
-          <div className="dashboard-section personal-info">
-            {editMode ? (
-              <EditProfileForm userData={userData} onSaveChanges={handleSaveChanges} />
-            ) : (
-              <div className="user-info">
-                <div>
-                  <img src={userData.photo} alt="User" className="profile-photo" />
-                </div>
-                <div className="info-section">
-                  <div className="profile-header">
-                    <h3>Персональная информация</h3>
-                    <button onClick={() => setEditMode(true)}>Редактировать</button>
+      <div>
+        <NavigationControlPanel />
+        <div className="personal-dashboard">
+          <div className="top-section">
+            <div className="dashboard-section personal-info">
+              {editMode ? (
+                <EditProfileForm userData={userData} onSaveChanges={handleSaveChanges} />
+              ) : (
+                <div className="user-info">
+                  <div>
+                    <img src={userData.photo} alt="User" className="profile-photo" />
                   </div>
-                  <p>Имя: {userData.first_name}</p>
-                  <p>Фамилия: {userData.last_name}</p>
-                  <p>Отчество: {userData.father_name}</p>
-                  <p>Город: {userData.city}</p>
+                  <div className="info-section">
+                    <div className="profile-header">
+                      <h3>Персональная информация</h3>
+                      <button onClick={() => setEditMode(true)} className="edit-button">
+                        <img src="/public/Изменить.png" alt="Edit" className="edit-icon" />
+                      </button>
+                    </div>
+                    <div className="personal-info">
+                      <div>
+                        <p>Имя: {userData.first_name}</p>
+                        <p>Фамилия: {userData.last_name}</p>
+                      </div>
+                      <div>
+                        <p>Отчество: {userData.father_name}</p>
+                        <p>Город: {userData.city}</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
+            <div className="dashboard-section message-sender">
+              <MessageSender />
+            </div>
           </div>
-          <div className="dashboard-section message-sender">
-            <MessageSender />
+          <div className="dashboard-section chart-section">
+            <Chart />
           </div>
-        </div>
-        <div className="dashboard-section chart-section">
-          <Chart />
         </div>
       </div>
-    </div>
   );
 };
 
